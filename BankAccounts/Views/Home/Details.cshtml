@@ -1,0 +1,40 @@
+@using BankAccounts.Models
+@model Transaction
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title>Hello!</title>
+        <link rel="stylesheet" href="~/css/style.css"/>
+
+    </head>
+    <body>
+        <h1>Welcome @ViewBag.Username</h1>
+        Current balance: <div>@string.Format("{0:C}", ViewBag.Balance)</div>
+        <form asp-action="CreateTransaction" method="POST" asp-controller="Home">
+            <label>Deposit/Withdraw: </label>
+            <input asp-for="Amount" type="number" value="0.00" step="0.01">
+            <input type="submit" value="Submit">
+            <span asp-validation-for="Amount"></span>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Amount</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Transaction item in ViewBag.Transactions)
+                {
+                    <tr>
+                        <td>@string.Format("{0:C}", item.Amount)</td>
+                        <td>@item.CreatedAt.Date</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a href="logout">Logout</a>
+    </body>
+</html>
